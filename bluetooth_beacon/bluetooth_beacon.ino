@@ -10,8 +10,8 @@
 SoftwareSerial HM10(2,3); // RX, TX
 
 // Check Sec
-#define SLEEP_TIME 15 // (5, 10, 15) ms
-#define MAX_COUNT 20
+#define SLEEP_TIME 10 // (5, 10, 15) ms
+#define MAX_COUNT 100
 
 // Check MAC
 String CHECK_UUID = "2E234454CF6D4A0FADF2F4911BA9FFA6";
@@ -32,6 +32,7 @@ void setup() {
   Serial.begin(9600);
   HM10.begin(9600);
   Serial.println("Arduino UNO Start!");
+  Serial.print("PLEASE WAIT ");
 }
 
 void loop() {
@@ -47,14 +48,13 @@ void loop() {
   if (count > 0 && !start) {
     delay(SLEEP_TIME);
     count--;
-    Serial.print("MSG COUNT : ");
-    Serial.println(MAX_COUNT - count);
+    Serial.print(".");
     HM10.println("AT+DISI?");
     start = true;
   }
   else if (count == 0 && !start) {
     count--;
-    Serial.print("SUCCESS : ");
+    Serial.print("\nSUCCESS : ");
     Serial.println(success);
     Serial.print("Fail : ");
     Serial.println(fail);
